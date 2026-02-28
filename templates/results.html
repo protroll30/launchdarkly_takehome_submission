@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head><title>Recommendations</title></head>
+<body>
+<h1>Recommendations</h1>
+<p><b>User:</b> {{ user_key }} | <b>Type:</b> {{ user_type }}</p>
+<p><b>Algorithm:</b> {{ algorithm }}</p>
+<ul>
+{% for p in recs %}
+    <li>{{ p.name }} ({{ p.category }}) — popularity {{ p.popularity }}</li>
+{% endfor %}
+</ul>
+<p><a href="/">Back</a></p>
+</body>
+</html>

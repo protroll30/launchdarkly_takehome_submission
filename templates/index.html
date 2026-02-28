@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head><title>Recommendations</title></head>
+<body>
+<h1>Get Recommendations</h1>
+<form method="POST" action="/recommend">
+    <label>User Key: <input name="user_key" required /></label><br><br>
+    <label>User Type:
+        <select name="user_type">
+            <option value="standard">standard</option>
+            <option value="power">power</option>
+        </select>
+    </label><br><br>
+    <button type="submit">Get Recommendations</button>
+</form>
+</body>
+</html>

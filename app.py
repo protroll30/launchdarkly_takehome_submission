@@ -1,7 +1,7 @@
 """
-Dynamic Recommendation Engine - minimal Flask app (Step 1: no LaunchDarkly).
+Dynamic Recommendation Engine - Flask app with templates.
 """
-from flask import Flask, request, redirect, url_for
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
 
@@ -21,7 +21,7 @@ CATALOG = [
 
 
 def get_simple_recommendations():
-    """Top 5 by popularity (default algorithm)."""
+    """Top 5 by popularity (default algo)."""
     sorted_catalog = sorted(CATALOG, key=lambda p: p["popularity"], reverse=True)
     return sorted_catalog[:5]
 
@@ -29,49 +29,25 @@ def get_simple_recommendations():
 @app.route("/")
 def index():
     """Form: user_key and user_type (standard/power)."""
-    html = """
-    <!DOCTYPE html>
-    <html>
-    <head><title>Recommendations</title></head>
-    <body>
-    <h1>Get Recommendations</h1>
-    <form method="POST" action="/recommend">
-        <label>User Key: <input name="user_key" required /></label><br><br>
-        <label>User Type:
-            <select name="user_type">
-                <option value="standard">standard</option>
-                <option value="power">power</option>
-            </select>
-        </label><br><br>
-        <button type="submit">Get Recommendations</button>
-    </form>
-    </body>
-    </html>
-    """
-    return html
+    return render_template("index.html")
 
 
 @app.route("/recommend", methods=["POST"])
 def recommend():
-    """Show top 5 by popularity and which algorithm was used."""
+    """Show top 5 by popularity and which algo was used."""
     user_key = request.form.get("user_key", "")
     user_type = request.form.get("user_type", "standard")
 
     recs = get_simple_recommendations()
     algorithm = "simple"
 
-    lines = [
-        "<h1>Recommendations</h1>",
-        f"<p><b>User:</b> {user_key} | <b>Type:</b> {user_type}</p>",
-        f"<p><b>Algorithm:</b> {algorithm}</p>",
-        "<ul>",
-    ]
-    for p in recs:
-        lines.append(f"<li>{p['name']} ({p['category']}) — popularity {p['popularity']}</li>")
-    lines.append("</ul>")
-    lines.append('<p><a href="/">Back</a></p>')
-
-    return "\n".join(lines)
+    return render_template(
+        "results.html",
+        user_key=user_key,
+        user_type=user_type,
+        recs=recs,
+        algorithm=algorithm,
+    )
 
 
 if __name__ == "__main__":
