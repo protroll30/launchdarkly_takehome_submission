@@ -5,6 +5,7 @@
 <h1>Recommendations</h1>
 <p><b>User:</b> {{ user_key }} | <b>Type:</b> {{ user_type }}</p>
 <p><b>Algorithm:</b> {{ algorithm }}</p>
+{% if variation %}<p><b>Variation:</b> {{ variation }}</p>{% endif %}
 <ul>
 {% for p in recs %}
     <li>{{ p.name }} ({{ p.category }}) — popularity {{ p.popularity }}</li>
