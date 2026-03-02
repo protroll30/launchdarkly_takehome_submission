@@ -14,7 +14,7 @@ Minimal Flask app that uses LaunchDarkly flags to switch between simple and comp
    ```bash
    copy .env.example .env
    ```
-   Edit `.env` and set `LD_SDK_KEY` to the SDK key provided in the submission email (or from LaunchDarkly: Project settings > Environments > Test).
+   Edit `.env` and set `LD_SDK_KEY` to the SDK key provided in the submission email.
 
 ---
 
